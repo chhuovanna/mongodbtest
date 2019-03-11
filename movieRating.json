@@ -1,0 +1,57 @@
+//Collection Movie
+
+{
+	"_id":"id Movie"
+	, "title":"tile Movie"
+	, "director": "directed by "
+	, "year": released year
+	, ratings:[
+		{
+			reviewer_id: id reviewer
+			, name: reviewer's name
+			, stars: rating stars
+			, ratingDate: rating date
+		}
+		,{
+			reviewer_id: id reviewer
+			, name: reviewer's name
+			, stars: rating stars
+			, ratingDate: rating date
+		}
+	]
+}
+
+//collection reviewer
+
+{
+
+	_id: id of reviewer
+	, name: name of reviewer
+}
+
+
+//Collection Movie
+
+{
+	_id:id Movie
+	, title:tile Movie
+	, director: directed by 
+	, year: released year
+}
+
+//collection reviewer
+
+{
+
+	_id: id of reviewer
+	, name: name of reviewer
+}
+
+//collection rating
+{
+	_id: id of rating
+	, movie: id of movie from movie collection
+	, reviewer:id of reviewer from reviewer collection
+	, stars: rating stars
+	, ratingDate: rating date
+}

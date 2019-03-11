@@ -1,0 +1,52 @@
+//office
+
+{
+	_id:..
+	, ...
+	,..
+}
+
+//employees
+{
+	_id:..
+	, ...:...
+	,..:..
+	, office:...
+	, reportTo:.. supervisor
+}
+//product line
+{
+
+}
+//product
+{
+
+}
+//customer
+{
+
+}
+//payment
+{
+
+}
+//order
+{
+	...:..
+	, customer: "id customer"
+	, orderDetail:[
+		{
+			product_id:..
+			, orderQuantity:..
+			, priceEach:...
+			, orderlineNumber:...
+		}
+		,
+		{
+			product_id:..
+			, orderQuantity:..
+			, priceEach:...
+			, orderlineNumber:...
+		}
+	]
+}
