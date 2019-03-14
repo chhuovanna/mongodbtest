@@ -14,7 +14,7 @@
     $addreviewerurl=$protocol.$hostName.$pathInfo['dirname']."/addreviewer.php";
     $ratemovieurl=$protocol.$hostName.$pathInfo['dirname']."/ratemovie.php";
     $showmovierateurl=$protocol.$hostName.$pathInfo['dirname']."/showrating.php";
-    $savemovieurl = $protocol.$hostName.$pathInfo['dirname']."/savemovie.php";
+    $savereviewerurl = $protocol.$hostName.$pathInfo['dirname']."/savereviewer.php";
 
 
 
@@ -22,7 +22,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Add Movie</title>
+	<title>Add Reviewer</title>
 </head>
 <body>
 	<div class='menu'>
@@ -39,24 +39,15 @@ EOF;
 echo $html;
     $html=<<<EOF
 
-<form action="$savemovieurl" method="post">
-    <label>mid:</label><input type="text" name="mid">
+<form action="$savereviewerurl" method="post">
+    <label>rid:</label><input type="text" name="rid">
     <br>
-    <label>title:</label><input type="text" name="title">
-    <br>
-    <label>year:</label><input type="text" name="year">
-    <br>
-    <label>director:</label><input type="text" name="director">
+    <label>name:</label><input type="text" name="name">
     <br>
     <button type="submit">Save</button>
 </form>
 EOF;
 echo $html;
-
-
-
-
-
 echo "</body></html>";
 ?>
 
