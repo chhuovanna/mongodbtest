@@ -5,9 +5,9 @@ use MongoDB\Client as Mongo;
 $user = "admin";
 $pwd = 'admin';
 
-$mongo = new Mongo("mongodb://${user}:${pwd}@127.0.0.1:27017");
+$mongo = new Mongo("mongodb://127.0.0.1:27017");
 $reviewercollection = $mongo->movieRating->reviewer;
-$insertOneResult = $reviewercollection->insertOne(["_id"=>$_POST['rid']
+$insertOneResult = $reviewercollection->insertOne(["_id"=> (int)$_POST['rid']
 							, "name"=> $_POST['name']
 						]);
 

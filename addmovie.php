@@ -40,14 +40,14 @@ echo $html;
     $html=<<<EOF
 
 <form action="$savemovieurl" method="post">
-    <label>mid:</label><input type="text" name="mid">
-    <br>
-    <label>title:</label><input type="text" name="title">
-    <br>
-    <label>year:</label><input type="text" name="year">
-    <br>
+    <label>mid:</label><input type="number" name="mid" min=1 required>
+    <br><br>
+    <label>title:</label><input type="text" name="title" required>
+    <br><br>
+    <label>year:</label><input type="number" min='1' max='9999' name="year">
+    <br><br>
     <label>director:</label><input type="text" name="director">
-    <br>
+    <br><br>
     <button type="submit">Save</button>
 </form>
 EOF;

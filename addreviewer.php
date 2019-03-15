@@ -40,9 +40,10 @@ echo $html;
     $html=<<<EOF
 
 <form action="$savereviewerurl" method="post">
-    <label>rid:</label><input type="text" name="rid">
-    <br>
+    <label>rid:</label><input type="number" name="rid" min='1' required>
+    <br><br>
     <label>name:</label><input type="text" name="name">
+    <br>
     <br>
     <button type="submit">Save</button>
 </form>

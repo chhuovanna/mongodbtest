@@ -1,4 +1,7 @@
 <?php  
+require 'vendor/autoload.php'; 
+use MongoDB\Client as Mongo;
+
    // output: /myproject/index.php
     $currentPath = $_SERVER['PHP_SELF']; 
     
@@ -22,7 +25,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Add Movie</title>
+	<title>Rate Movie</title>
 </head>
 <body>
 	<div class='menu'>
@@ -31,22 +34,40 @@
 		<a href="$ratemovieurl">Rate Movie</a>
 		<a href="$showmovierateurl">Show Movie Rate</a>
 	</div>
-
-
-
 EOF;
-
 echo $html;
+
+    $mongo = new Mongo("mongodb://127.0.0.1:27017");
+    $movieCollection = $mongo->movieRating->movie;
+    $movies = $movieCollection->find(['title'=>['$exists' => true]]);
+    $movieOptions = "";
+
+
+    foreach ($movies as $movie) {
+        $movieOptions .= "<option value='". $movie->_id ."'>".$movie->title."</option>";
+    }
+
+    $reviewers = $mongo->movieRating->reviewer->find(['name'=>['$exists'=>true]]); 
+
+    $reviewerOptions="";
+
+    foreach ($reviewers as $reviewer) {
+        $reviewerOptions .= "<option value='". $reviewer->_id ."'>".$reviewer->name."</option>";
+    }
+
+
     $html=<<<EOF
 
 <form action="$saveratingurl" method="post">
-    <label>mid:</label><input type="text" name="mid">
-    <br>
-    <label>title:</label><input type="text" name="title">
-    <br>
-    <label>year:</label><input type="text" name="year">
-    <br>
-    <label>director:</label><input type="text" name="director">
+    <label>Movie:</label>
+    <select name="mid">
+    $movieOptions
+    </select>
+    <label>Reviewer:</label>
+    <select name="rid">
+    $reviewerOptions
+    </select>
+    <label>Stars:</label><input type="number" min='0' max='5' name="stars">
     <br>
     <button type="submit">Save</button>
 </form>
