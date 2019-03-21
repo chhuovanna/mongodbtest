@@ -1,6 +1,9 @@
 <?php 
 require 'vendor/autoload.php'; 
 use MongoDB\Client as Mongo;
+
+
+//if authentication is enable for mongoDB
 /*
 $user = "admin";
 $pwd = 'admin';*/
@@ -10,37 +13,24 @@ $pwd = 'admin';*/
 $mongo = new Mongo("mongodb://127.0.0.1:27017");
 $moviecollection = $mongo->movieRating->movie;
 
-$updateResult = $moviecollection->updateOne(['_id'=>$_POST['mid']]
-				, ['$set' => [ 'year'=>'10'
+
+try{
+	$updateResult = $moviecollection->updateOne(['_id'=> (int) $_POST['mid']]
+				, ['$push' => ['ratings'=> //push is used to add rating to array of ratings
+										['rid'=> (int) $_POST['rid']
+										,'stars' => (int) $_POST['stars']
+										,'ratingDate' =>  date("Y-m-d")
+										]
 							]
 				] );
+	if ($updateResult->getModifiedCount() == 1){
+		header('location:'.strtok($_SERVER["HTTP_REFERER"],'?')."?success=1");
+	}else{
+		header('location:'.strtok($_SERVER["HTTP_REFERER"],'?')."?success=0");	
+	}
 
-/*$updateResult = $moviecollection->updateOne(['_id'=>$_POST['mid']]
-				, ['$set' => ['rates'=>
-										[['rid'=>$_POST['rid']
-										,'stars' => $_POST['stars']
-										,'ratingDate' =>  date("Y-m-d")
-										]]
-							]
-				] );
-
-$array =[ ['_id'=>$_POST['mid']]
-				, ['$set' => ['rates'=>
-										[['rid'=>$_POST['rid']
-										,'stars' => $_POST['stars']
-										,'ratingDate' =>  date("Y-m-d")
-										]]
-							]
-				] ];
-
-print_r($array);
-*/
-
-
-if ($updateResult->getMatchedCount() == 1){
-	header('location:'.$_SERVER['HTTP_REFERER']);
-}else{
-	echo "fail to add new rating";
+} catch (Exception $e) {
+    header('location:'.strtok($_SERVER["HTTP_REFERER"],'?')."?success=0");	
 }
 
 

@@ -1,45 +1,21 @@
 <?php  
 require 'vendor/autoload.php'; 
+require_once 'menu.php';
 use MongoDB\Client as Mongo;
 
-   // output: /myproject/index.php
-    $currentPath = $_SERVER['PHP_SELF']; 
-    
-    // output: Array ( [dirname] => /myproject [basename] => index.php [extension] => php [filename] => index ) 
-    $pathInfo = pathinfo($currentPath); 
-    
-    // output: localhost
-    $hostName = $_SERVER['HTTP_HOST']; 
-    
-    // output: http://
-    $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https://'?'https://':'http://';
-    $addmovieurl=$protocol.$hostName.$pathInfo['dirname']."/addmovie.php";
-    $addreviewerurl=$protocol.$hostName.$pathInfo['dirname']."/addreviewer.php";
-    $ratemovieurl=$protocol.$hostName.$pathInfo['dirname']."/ratemovie.php";
-    $showmovierateurl=$protocol.$hostName.$pathInfo['dirname']."/showrating.php";
-    $saveratingurl = $protocol.$hostName.$pathInfo['dirname']."/saverating.php";
+    //test if the previous insert is successful or not 
+    if (array_key_exists("success", $_GET) ){
+        if ($_GET['success'] == 1)
+            echo("<script>alert('Added')</script>");
+        else
+            echo("<script>alert('Fail to add')</script>");
+    }
 
 
-
-	$html = <<<EOF
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Rate Movie</title>
-</head>
-<body>
-	<div class='menu'>
-		<a href="$addmovieurl" target="_self">Add Movie</a>
-		<a href="$addreviewerurl">Add Reviewer</a>
-		<a href="$ratemovieurl">Rate Movie</a>
-		<a href="$showmovierateurl">Show Movie Rate</a>
-	</div>
-EOF;
-echo $html;
 
     $mongo = new Mongo("mongodb://127.0.0.1:27017");
     $movieCollection = $mongo->movieRating->movie;
-    $movies = $movieCollection->find(['title'=>['$exists' => true]]);
+    $movies = $movieCollection->find(['title'=>['$exists' => true]]); // get only the movie with title
     $movieOptions = "";
 
 
@@ -67,7 +43,7 @@ echo $html;
     <select name="rid">
     $reviewerOptions
     </select>
-    <label>Stars:</label><input type="number" min='0' max='5' name="stars">
+    <label>Stars:</label><input type="number" min='1' max='5' name="stars" required>
     <br>
     <button type="submit">Save</button>
 </form>

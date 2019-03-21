@@ -9,17 +9,25 @@ $pwd = 'admin';*/
 
 $mongo = new Mongo("mongodb://127.0.0.1:27017");
 $moviecollection = $mongo->movieRating->movie;
-$insertOneResult = $moviecollection->insertOne(["_id"=>(int) $_POST['mid']
+
+try {
+	$insertOneResult = $moviecollection->insertOne(["_id"=>(int) $_POST['mid']
 							, "title"=> $_POST['title']
 							, "year" => (int) $_POST['year']
 							, "director" => $_POST[ 'director']
+							, "ratings" => []
 						]);
 
-if ($insertOneResult->getInsertedCount() == 1){
-	header('location:'.$_SERVER['HTTP_REFERER']);
-}else{
-	echo "fail to add new movie";
+	if ($insertOneResult->getInsertedCount() == 1){
+		header('location:'.strtok($_SERVER["HTTP_REFERER"],'?')."?success=1");
+	}else{
+		header('location:'.strtok($_SERVER["HTTP_REFERER"],'?')."?success=0");	
+	}
+
+} catch (Exception $e) {
+    header('location:'.strtok($_SERVER["HTTP_REFERER"],'?')."?success=0");
 }
+
 
 
 ?>
